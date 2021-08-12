@@ -5,6 +5,9 @@ A boolean input for [vuetifyjs](https://vuetifyjs.com/) which produces a SQL sty
 
 This example would select all american or german programmers (given that you group them accordingly).
 
+## Installation
+Just copy `BooleanInput.vue` to your components
+
 ## Usage
 
 ```
