@@ -104,6 +104,6 @@ This will show the input form with a text field below which (on click) contains 
 If using the output of `getSqlExpression()`, remember to sanitize the SQL expression server-side!
 
 ## TODOs
-[ ] ability to parse SQL-expression into binary tree
-[ ] AND & OR operators with more than two arguments
-[ ] add graphical tree representation
+- [ ] ability to parse SQL-expression into binary tree
+- [ ] AND & OR operators with more than two arguments
+- [ ] add graphical tree representation
