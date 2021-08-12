@@ -99,7 +99,7 @@ This will show the input form with a text field below which (on click) contains 
     ```
     - IDs can be anything, just need to be unique (if created from the UI timestamps are used).
     - Operators are "" (for =), "NOT" (for <>), "AND" and "OR"
-    - arguments are either `value`s of items, or a subcondition
+    - arguments are either values of items, or a subcondition
 
 If using the output of `getSqlExpression()`, remember to sanitize the SQL expression server-side!
 
