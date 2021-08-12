@@ -54,7 +54,7 @@ export default {
 ```
 This will show the input form with a text field below which (on click) contains the evaluated SQL expression
 
-### Properties of BooleanInput
+### Props of BooleanInput
 - **items (required)**: an array of items, each with `text` and `value` keys:
     ```
     items: [
@@ -100,3 +100,5 @@ This will show the input form with a text field below which (on click) contains 
     - IDs can be anything, just need to be unique (if created from the UI timestamps are used).
     - Operators are "" (for =), "NOT" (for <>), "AND" and "OR"
     - arguments are either `value`s of items, or a subcondition
+
+If using the output of `getSqlExpression()`, remember to sanitize the SQL expression server-side!
