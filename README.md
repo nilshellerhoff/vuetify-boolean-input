@@ -59,7 +59,6 @@ This will show the input form with a text field below which (on click) contains 
     ```
     items: [
             { text: "Programmer", value: 1 },
-            { text: "Male", value: 2 },
             { text: "American", value: 4 },
             { text: "German", value: 5 },
           ],
