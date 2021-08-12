@@ -37,7 +37,6 @@ export default {
     return {
       items: [
         { text: "Programmer", value: 1 },
-        { text: "Male", value: 2 },
         { text: "American", value: 4 },
         { text: "German", value: 5 },
       ],
