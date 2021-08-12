@@ -65,7 +65,7 @@ This will show the input form with a text field below which (on click) contains 
           ],
     ```
     `text` will be used in the selector, `value` will be used in the expression
-- **condition**: an object which represents a condition
+- **condition**: an object which represents a binary expression tree
     
     the condition from the screenshot above would be represented as follows:
     ```
