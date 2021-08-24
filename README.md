@@ -125,5 +125,5 @@ If using the output of `getSqlExpression()`, remember to sanitize the SQL expres
 ## TODOs
 - [ ] ability to parse SQL-expression into binary tree
 - [ ] AND & OR operators with more than two arguments
-- [ ] add graphical tree representation
-- [ ] entity-value pairs and other operators (>, < ...)
+- [x] add graphical tree representation
+- [x] entity-value pairs and other operators (>, < ...)
