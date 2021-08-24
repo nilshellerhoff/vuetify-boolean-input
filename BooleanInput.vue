@@ -82,11 +82,17 @@ export default {
     // condition parameter is optional, default is items[0] is true
     //
     // condition {
-    //   id: 1,
-    //   operator: "AND", "OR", "NOT" or ""
+    //   id: some number,
+    //
+    //   -- if a single comparison
+    //   comparisonOperator: "=" or "<>"
+    //   entity: value of the selected entity
+    //   item: value of the selected item
+
+    //   -- else if a subcondition
+    //   logicOperator: "", "AND", "OR"
     //   arguments: [
-    //     a value from items.value    OR
-    //     some sub condition
+    //     at least two subconditions
     //   ]
     // }
     condition: {
@@ -94,10 +100,10 @@ export default {
       default: function () {
         return {
           id: new Date().getTime(),
-          logicOperator: "",
           comparisonOperator: "=",
           item: this.entities[0].items[0].value,
           entity: this.entities[0].value,
+          logicOperator: "",
           arguments: [],
         };
       },
