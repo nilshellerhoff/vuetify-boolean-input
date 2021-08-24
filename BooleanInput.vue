@@ -21,8 +21,26 @@
           no-gutters
           style="position: relative"
         >
-        <div style="position: absolute; left: 8px; top: 18px; width: calc(5%); height: 2px; background-color: #888"></div>
-        <div style="position: absolute; left: 8px; top: 10px; width: 2px; height: 10px; background-color: #888"></div>
+          <div
+            style="
+              position: absolute;
+              left: 8px;
+              top: 18px;
+              width: calc(5%);
+              height: 2px;
+              background-color: #888;
+            "
+          ></div>
+          <div
+            style="
+              position: absolute;
+              left: 8px;
+              top: 10px;
+              width: 2px;
+              height: 10px;
+              background-color: #888;
+            "
+          ></div>
           <v-col offset="1">
             <BooleanInput
               :condition="argument"
@@ -45,20 +63,30 @@
         <!-- comparison operator selector -->
         <v-col cols="1">
           <v-select
-            :items="comparisonOperators"
+            :items="comparisonOperators[currEntity.type]"
             v-model="condition.comparisonOperator"
             dense
             class="pr-2"
           ></v-select>
         </v-col>
-        <!-- item selector -->
+        <!-- value input -->
         <v-col cols="4">
+          <!-- item selector -->
           <v-autocomplete
+            v-if="currEntity.type == 'item'"
             :items="availableItems"
-            v-model="condition.item"
+            v-model="condition.value"
             dense
             class="pr-2"
           ></v-autocomplete>
+          <!-- number input -->
+          <v-text-field
+            v-if="currEntity.type == 'number'"
+            v-model="condition.value"
+            type="number"
+            dense
+            class="pr-2"
+          ></v-text-field>
         </v-col>
       </template>
     </v-row>
@@ -79,13 +107,13 @@ export default {
     //   {
     //     text: 'Entity'
     //     value: 'column name'
-    //     items: [ // optional if type is number or date
+    //     type: 'item', 'number' or 'date'
+    //     items: [ // if type is 'item'
     //       {
     //         text: 'item display name',
     //         value: 'item value / DB id'
     //       }
     //     ],
-    //     type: 'number' or 'date' // only if items is not set
     //   }
     // ]
     entities: {
@@ -99,9 +127,9 @@ export default {
     //   id: some number,
     //
     //   -- if a single comparison
-    //   comparisonOperator: "=" or "<>"
+    //   operator: "=" or "<>"
     //   entity: value of the selected entity
-    //   item: value of the selected item
+    //   value: selected value (item, number ...)
 
     //   -- else if a subcondition
     //   logicOperator: "", "AND", "OR"
@@ -115,7 +143,7 @@ export default {
         return {
           id: new Date().getTime(),
           comparisonOperator: "=",
-          item: this.entities[0].items[0].value,
+          value: this.entities[0].items[0].value,
           entity: this.entities[0].value,
           logicOperator: "none",
           arguments: [],
@@ -130,10 +158,20 @@ export default {
       { value: "AND", text: "AND" },
       { value: "OR", text: "OR" },
     ],
-    comparisonOperators: [
-      { value: "=", text: "=" },
-      { value: "<>", text: "!=" },
-    ],
+    comparisonOperators: {
+      item: [
+        { text: "=", value: "=" },
+        { text: "≠", value: "<>" },
+      ],
+      number: [
+        { text: "=", value: "=" },
+        { text: "≠", value: "<>" },
+        { text: "≥", value: ">=" },
+        { text: "≤", value: "<=" },
+        { text: ">", value: ">" },
+        { text: "<", value: "<" },
+      ],
+    },
   }),
   computed: {
     // timestamp is used for unique id generation
@@ -150,6 +188,15 @@ export default {
       });
       return items;
     },
+    currEntity() {
+      let currEntity = null;
+      this.entities.forEach((entity) => {
+        if (entity.value == this.condition.entity) {
+          currEntity = entity;
+        }
+      });
+      return currEntity;
+    },
   },
   methods: {
     getDefaultCondition(idoffset = 0) {
@@ -157,8 +204,8 @@ export default {
         id: new Date().getTime() + idoffset,
         logicOperator: "",
         comparisonOperator: "=",
-        item: this.entities[0].items[0].value,
         entity: this.entities[0].value,
+        value: this.entities[0].items[0].value,
         arguments: [],
       };
     },
@@ -166,12 +213,12 @@ export default {
       // add two children to the current node (for AND and OR operators)
       c.arguments = [this.getDefaultCondition(), this.getDefaultCondition(1)];
       c.entity = "";
-      c.item = "";
+      c.value = "";
     },
     removeChildren(c) {
       // add one child to the current node (for NOT and '' operators)
       c.entity = this.entities[0].value;
-      c.item = this.entities[0].items[0].value;
+      c.value = this.entities[0].items[0].value;
       c.arguments = [];
     },
     fixChildren(c) {
@@ -194,7 +241,7 @@ export default {
       if (condition.arguments.length == 0) {
         // we have a direct entity-value condition
         // add a direct expression (i.e. column=value or column<>value)
-        sql += condition.entity + condition.comparisonOperator + condition.item;
+        sql += condition.entity + condition.comparisonOperator + condition.value;
       } else {
         // we have a subcondition
         // recursively call this method on each of the subconditions and put parentheses around it
