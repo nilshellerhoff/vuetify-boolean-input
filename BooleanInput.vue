@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row no-gutters>
+    <v-row no-gutters style="position: relative">
       <!-- show the operator (every row) -->
       <v-col cols="2">
         <v-select
@@ -19,7 +19,10 @@
           v-for="argument in condition.arguments"
           :key="argument.id"
           no-gutters
+          style="position: relative"
         >
+        <div style="position: absolute; left: 8px; top: 18px; width: calc(5%); height: 2px; background-color: #888"></div>
+        <div style="position: absolute; left: 8px; top: 10px; width: 2px; height: 10px; background-color: #888"></div>
           <v-col offset="1">
             <BooleanInput
               :condition="argument"
@@ -114,7 +117,7 @@ export default {
           comparisonOperator: "=",
           item: this.entities[0].items[0].value,
           entity: this.entities[0].value,
-          logicOperator: "",
+          logicOperator: "none",
           arguments: [],
         };
       },
@@ -123,7 +126,7 @@ export default {
   data: () => ({
     // selectable operators
     logicOperators: [
-      { value: "", text: "(none)" },
+      { value: "none", text: "(none)" },
       { value: "AND", text: "AND" },
       { value: "OR", text: "OR" },
     ],
