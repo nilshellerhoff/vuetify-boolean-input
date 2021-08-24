@@ -8,11 +8,13 @@
           v-model="condition.logicOperator"
           label="Operator"
           class="pr-2"
+          dense
           @change="fixChildren(condition)"
         ></v-select>
       </v-col>
       <!-- show subtree if there are two arguments -->
       <template v-if="condition.arguments && condition.arguments.length == 2">
+        <!-- for each argument recursively call BooleanInput -->
         <v-row
           v-for="argument in condition.arguments"
           :key="argument.id"
@@ -27,23 +29,32 @@
         </v-row>
       </template>
       <!-- otherwise show the entity/item selector besides operator -->
+      <!-- entity selector -->
       <template v-else>
         <v-col cols="4">
           <v-autocomplete
             :items="entities"
             v-model="condition.entity"
+            dense
+            class="pr-2"
           ></v-autocomplete>
         </v-col>
+        <!-- comparison operator selector -->
         <v-col cols="1">
           <v-select
             :items="comparisonOperators"
             v-model="condition.comparisonOperator"
+            dense
+            class="pr-2"
           ></v-select>
         </v-col>
+        <!-- item selector -->
         <v-col cols="4">
           <v-autocomplete
             :items="availableItems"
             v-model="condition.item"
+            dense
+            class="pr-2"
           ></v-autocomplete>
         </v-col>
       </template>
@@ -128,16 +139,11 @@ export default {
     },
     // get the available items based on selected entity
     availableItems() {
-      // let items = []
-      // this.entities.forEach(function(entity) {
-      //   if (this.condition.entity == entity.value) {
-      //     items = this.entities[0].items
-      //   }
-      // }, this);
-      // return items
       let items = [];
       this.entities.forEach((entity) => {
-        items = items.concat(entity.items);
+        if (entity.value == this.condition.entity) {
+          items = entity.items;
+        }
       });
       return items;
     },
