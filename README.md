@@ -13,7 +13,7 @@ Just copy `BooleanInput.vue` to your components
 ```
 <template>
   <div>
-    <BooleanInput ref="boolInp" :items="items"></BooleanInput>
+    <BooleanInput ref="boolInp" :entities="entities"></BooleanInput>
     <v-row>
       <v-col cols="2">
         <v-btn @click="getSql">get SQL</v-btn>
@@ -35,10 +35,23 @@ export default {
   },
   data: function () {
     return {
-      items: [
-        { text: "Programmer", value: 1 },
-        { text: "American", value: 4 },
-        { text: "German", value: 5 },
+      entities: [
+        {
+          text: "Profession",
+          value: "s_profession",
+          items: [
+            { text: "Programmer", value: 1 },
+            { text: "Accounter", value: 2 },
+          ],
+        },
+        {
+          text: "Nationality",
+          value: "s_nationality",
+          items: [
+            { text: "American", value: 4, entity: "s_nationality" },
+            { text: "German", value: 5, entity: "s_nationality" },
+          ],
+        },
       ],
       sql: "",
     };
@@ -54,15 +67,23 @@ export default {
 This will show the input form with a text field below which (on click) contains the evaluated SQL expression
 
 ### Props of BooleanInput
-- **items (required)**: an array of items, each with `text` and `value` keys:
+- **entities (required)**: an array of entities, each with `text` and `value` and `items` keys:
     ```
-    items: [
-            { text: "Programmer", value: 1 },
-            { text: "American", value: 4 },
-            { text: "German", value: 5 },
+    entities: [
+            { text: "Profession", value: "s_profession", items: (items) },
+            { text: "Nationality", value: "s_nationality", items: (items) },
           ],
     ```
-    `text` will be used in the selector, `value` will be used in the expression
+    `text` will be used in the selector, `value` will be used in the expression. `items` is an array containing the items selectable for this entity, again with `text` and `value` keys. E.g. `items` for 'Nationality':
+    ```
+    items: [
+      { text: "American", value: "US" },
+      { text: "German", value: "DE" },
+      { text: "French", value: "FR" },
+      ...
+    ]
+    ```
+    Again, `text` will be the value shown in the UI and `value` will be used in the expression. `value` can be the values of a column or e.g. an ID if the expression is used in a join.
 - **condition**: an object which represents a binary expression tree
     
     the condition from the screenshot above would be represented as follows:
