@@ -74,7 +74,7 @@
           <!-- item selector -->
           <v-autocomplete
             v-if="currEntity.type == 'item'"
-            :items="availableItems"
+            :items="currEntity.items"
             v-model="condition.value"
             dense
             class="pr-2"
@@ -107,7 +107,7 @@ export default {
     //   {
     //     text: 'Entity'
     //     value: 'column name'
-    //     type: 'item', 'number' or 'date'
+    //     type: 'item' or 'number'
     //     items: [ // if type is 'item'
     //       {
     //         text: 'item display name',
@@ -178,16 +178,7 @@ export default {
     time: () => {
       return new Date().getTime();
     },
-    // get the available items based on selected entity
-    availableItems() {
-      let items = [];
-      this.entities.forEach((entity) => {
-        if (entity.value == this.condition.entity) {
-          items = entity.items;
-        }
-      });
-      return items;
-    },
+    // get all the info of the currently selected entity
     currEntity() {
       let currEntity = null;
       this.entities.forEach((entity) => {
