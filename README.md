@@ -1,7 +1,7 @@
 # Vuetify Boolean Input
 A boolean logic input for [vuetifyjs](https://vuetifyjs.com/) which produces a SQL style condition. Should easily be portable to other frameworks like Quasar... if you rework the template part.
 
-![image](https://user-images.githubusercontent.com/24147614/133203542-79e86308-c69b-416a-8088-43b2f01063a9.png)
+![image](https://user-images.githubusercontent.com/24147614/133210013-b9a58e04-c16b-483f-9796-c80ab0134b2b.png)
 
 This example would select all programmers, accountants and pilots who are 30 years or older.
 
