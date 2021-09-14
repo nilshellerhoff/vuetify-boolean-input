@@ -1,9 +1,9 @@
 # Vuetify Boolean Input
 A boolean logic input for [vuetifyjs](https://vuetifyjs.com/) which produces a SQL style condition. Should easily be portable to other frameworks like Quasar... if you rework the template part.
 
-![Screenshot from 2021-08-12 23-02-07](https://user-images.githubusercontent.com/24147614/129269427-682e76a4-fca3-45dd-b1ce-81ae24b4899f.png)
+![image](https://user-images.githubusercontent.com/24147614/133203252-b1b678db-7fc9-4fce-b25d-3d7f24ae8a64.png)
 
-This example would select all american or german programmers (given that you group them accordingly).
+This example would select all programmers and accountants who are 30 years or older.
 
 ## Installation
 Just copy `BooleanInput.vue` to your components
